@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operation Fractured Grid — CM Leadership Cabinet TTX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ─────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:    #0F1520;
+  --paper:  #F2EDE4;
+  --cream:  #E8E2D8;
+  --rule:   #C4BAA8;
+  --red:    #8C1F12;
+  --red-lt: #F5DDD9;
+  --amber:  #7A5400;
+  --amb-lt: #F5EAD0;
+  --green:  #1A4A30;
+  --grn-lt: #D4E8DC;
+  --blue:   #1A3050;
+  --blu-lt: #D4E0F0;
+  --purple: #3D1A60;
+  --pur-lt: #E8D8F8;
+  --mid:    #5A5248;
+  --faint:  #8A8078;
+  --signal: #CC3322;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'IBM Plex Sans',sans-serif;
+  background:var(--ink);
+  color:var(--paper);
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* ── SCROLLBAR ────────────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:#3A3028;border-radius:3px}
+
+/* ── LAYOUT ───────────────────────────────────────────── */
+.shell{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ──────────────────────────────────────────── */
+.sidebar{
+  width:260px;min-width:260px;
+  background:#080C14;
+  border-right:1px solid #1E2A3A;
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;
+  z-index:100;overflow-y:auto;
+}
+.sidebar-logo{
+  padding:24px 20px 20px;
+  border-bottom:1px solid #1E2A3A;
+}
+.logo-eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.18em;
+  color:var(--amber);text-transform:uppercase;
+  margin-bottom:6px;
+}
+.logo-title{
+  font-family:'IBM Plex Serif',serif;
+  font-size:17px;font-weight:600;
+  color:var(--paper);line-height:1.2;
+}
+.logo-sub{font-size:11px;color:var(--faint);margin-top:4px;font-family:'IBM Plex Mono',monospace}
+
+/* clock */
+.sidebar-clock{
+  padding:14px 20px;
+  border-bottom:1px solid #1E2A3A;
+  background:#0A0F1A;
+}
+.clock-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--faint);text-transform:uppercase;margin-bottom:2px}
+.clock-time{font-family:'IBM Plex Mono',monospace;font-size:22px;color:var(--signal);letter-spacing:.05em;font-weight:600}
+.clock-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);margin-top:2px}
+
+/* status bar */
+.status-bar{
+  padding:12px 20px;
+  border-bottom:1px solid #1E2A3A;
+}
+.status-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--faint);text-transform:uppercase;margin-bottom:8px}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.status-dot.red{background:var(--signal);box-shadow:0 0 6px var(--signal)}
+.status-dot.amber{background:#E89020}
+.status-dot.green{background:#2EA866;box-shadow:0 0 6px #2EA866}
+.status-item{font-size:11px;color:#9A9088;margin-bottom:5px;display:flex;align-items:center}
+
+/* nav */
+.sidebar-nav{flex:1;padding:16px 0}
+.nav-section-label{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.18em;color:#3A4A5A;text-transform:uppercase;
+  padding:0 20px;margin:12px 0 4px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 20px;cursor:pointer;
+  border-left:3px solid transparent;
+  transition:all .15s;
+  font-size:13px;color:#7A8090;
+  text-decoration:none;
+}
+.nav-item:hover{color:var(--paper);background:rgba(255,255,255,.04)}
+.nav-item.active{color:var(--paper);border-left-color:var(--signal);background:rgba(255,255,255,.06)}
+.nav-item .nav-icon{font-family:'IBM Plex Mono',monospace;font-size:10px;color:inherit;opacity:.7;min-width:20px}
+.nav-badge{
+  margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;
+  padding:2px 6px;border-radius:2px;background:var(--signal);color:#fff;
+}
+
+.sidebar-footer{
+  padding:14px 20px;border-top:1px solid #1E2A3A;
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  color:#2A3A4A;letter-spacing:.08em;
+}
+
+/* ── MAIN CONTENT ─────────────────────────────────────── */
+.main{margin-left:260px;flex:1;min-height:100vh}
+
+/* ── TOP BAR ─────────────────────────────────────────── */
+.topbar{
+  background:#0A0F1A;
+  border-bottom:1px solid #1E2A3A;
+  padding:0 40px;
+  height:52px;display:flex;align-items:center;
+  gap:20px;position:sticky;top:0;z-index:50;
+}
+.topbar-breadcrumb{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  color:var(--faint);display:flex;align-items:center;gap:8px;
+}
+.topbar-breadcrumb span{color:var(--paper)}
+.topbar-right{margin-left:auto;display:flex;gap:12px;align-items:center}
+.btn-print{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;border:1px solid #2A3A4A;
+  color:var(--faint);padding:5px 12px;cursor:pointer;
+  transition:all .15s;
+}
+.btn-print:hover{border-color:var(--signal);color:var(--paper)}
+.exercise-status{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  color:var(--signal);letter-spacing:.1em;
+  border:1px solid var(--signal);padding:4px 10px;
+  background:rgba(140,31,18,.1);
+}
+
+/* ── PAGE SECTIONS (tab panels) ──────────────────────── */
+.page{display:none;padding:40px}
+.page.active{display:block}
+
+/* ── SECTION HEADING ─────────────────────────────────── */
+.section-eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.18em;color:var(--signal);text-transform:uppercase;
+  margin-bottom:8px;
+}
+.section-heading{
+  font-family:'IBM Plex Serif',serif;font-size:28px;font-weight:600;
+  color:var(--paper);line-height:1.15;margin-bottom:6px;
+}
+.section-sub{font-size:14px;color:var(--faint);margin-bottom:32px}
+.rule-line{height:1px;background:linear-gradient(to right,var(--signal),transparent);margin-bottom:32px}
+
+/* ── SITUATION BANNER ─────────────────────────────────── */
+.situation-banner{
+  background:#120810;
+  border:1px solid var(--signal);
+  border-left:4px solid var(--signal);
+  padding:20px 24px;margin-bottom:24px;
+  position:relative;
+}
+.situation-banner::before{
+  content:'⚠ ACTIVE EXERCISE SCENARIO';
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.18em;color:var(--signal);
+  display:block;margin-bottom:10px;
+}
+.situation-text{font-size:14px;line-height:1.7;color:#C8C0B8}
+.situation-text strong{color:var(--paper)}
+
+.constraint-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.constraint-card{
+  background:#0A0F1A;
+  border:1px solid #1E2A3A;
+  border-top:3px solid var(--signal);
+  padding:14px 16px;
+}
+.constraint-icon{font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--signal);margin-bottom:6px}
+.constraint-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--signal);text-transform:uppercase;margin-bottom:4px}
+.constraint-text{font-size:12px;color:var(--faint);line-height:1.5}
+
+/* ── AGENDA TABLE ─────────────────────────────────────── */
+.agenda-table{width:100%;border-collapse:collapse;margin-bottom:28px}
+.agenda-table th{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;
+  background:#0A0F1A;color:var(--faint);
+  padding:10px 14px;text-align:left;
+  border-bottom:1px solid #1E2A3A;
+}
+.agenda-table td{
+  padding:11px 14px;font-size:13px;
+  border-bottom:1px solid #1A2030;
+  vertical-align:top;
+}
+.agenda-table tr:hover td{background:rgba(255,255,255,.02)}
+.time-cell{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);white-space:nowrap}
+.dur-cell{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#4A5A6A;white-space:nowrap}
+.phase-scenario{color:var(--signal);font-weight:600}
+.phase-report{color:var(--amber)}
+.phase-open{color:var(--green)}
+.phase-break{color:#4A5A6A}
+
+/* ── SCENARIO CARDS ──────────────────────────────────── */
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.scenario-card{
+  background:#0A0F1A;
+  border:1px solid #1E2A3A;
+  overflow:hidden;cursor:pointer;
+  transition:all .2s;
+}
+.scenario-card:hover{border-color:#2E4A6A;transform:translateY(-2px)}
+.scenario-card.s1{border-top:3px solid var(--signal)}
+.scenario-card.s2{border-top:3px solid #1A6A9A}
+.scenario-card.s3{border-top:3px solid var(--amber)}
+.sc-header{padding:14px 16px;border-bottom:1px solid #1A2030}
+.sc-num{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px}
+.sc-num.s1{color:var(--signal)} .sc-num.s2{color:#3A8ABE} .sc-num.s3{color:var(--amber)}
+.sc-title{font-family:'IBM Plex Serif',serif;font-size:15px;color:var(--paper);line-height:1.3}
+.sc-body{padding:14px 16px}
+.sc-problem{font-size:12px;color:#9A9088;line-height:1.6;margin-bottom:12px}
+.sc-timer{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint)}
+.sc-timer span{color:var(--paper)}
+.sc-actors{margin-top:10px}
+.sc-actors-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+.actor-chip{
+  display:inline-block;font-size:11px;
+  background:#1A2030;border:1px solid #2A3A4A;
+  padding:3px 7px;margin:2px 2px 2px 0;color:#9A9088;
+}
+
+/* ── TABLES PAGE ─────────────────────────────────────── */
+.table-selector{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.table-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  letter-spacing:.08em;padding:7px 16px;
+  background:transparent;border:1px solid #2A3A4A;
+  color:var(--faint);cursor:pointer;transition:all .15s;
+}
+.table-btn:hover{border-color:#4A5A6A;color:var(--paper)}
+.table-btn.active-tbl{color:var(--paper);border-color:var(--signal);background:rgba(140,31,18,.1)}
+.table-btn.tA{--tc:var(--signal)} .table-btn.tB{--tc:#3A8ABE}
+.table-btn.tC{--tc:var(--amber)} .table-btn.tD{--tc:var(--green)}
+.table-btn.tE{--tc:var(--purple)}
+.table-btn.active-tbl{border-color:var(--tc,var(--signal));background:rgba(0,0,0,.2);color:var(--paper)}
+
+.table-panel{display:none}
+.table-panel.active{display:block}
+.table-card{
+  background:#0A0F1A;border:1px solid #1E2A3A;
+  overflow:hidden;
+}
+.table-card-header{
+  padding:16px 20px;
+  border-bottom:1px solid #1E2A3A;
+  display:flex;align-items:baseline;gap:12px;
+}
+.tch-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase}
+.tch-name{font-family:'IBM Plex Serif',serif;font-size:20px;color:var(--paper)}
+.tch-sub{font-size:12px;color:var(--faint)}
+.members-table{width:100%;border-collapse:collapse}
+.members-table th{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);padding:8px 14px;text-align:left;
+  border-bottom:1px solid #1A2030;background:#06080E;
+}
+.members-table td{
+  padding:10px 14px;font-size:13px;
+  border-bottom:1px solid #1018280A;
+  vertical-align:top;color:#B0A898;
+}
+.members-table tr:last-child td{border-bottom:none}
+.members-table tr:hover td{background:rgba(255,255,255,.02);color:var(--paper)}
+.name-cell{color:var(--paper);font-weight:500}
+.role-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.1em;padding:2px 7px;border-radius:1px;
+  text-transform:uppercase;font-weight:600;
+  display:inline-block;
+}
+.rt-anchor{background:var(--ink);color:var(--paper);border:1px solid var(--faint)}
+.rt-primary{background:rgba(140,31,18,.2);color:var(--signal);border:1px solid var(--signal)}
+.rt-lens{background:rgba(26,48,80,.3);color:#6A9ABE;border:1px solid #2A4A6A}
+.rt-scribe{background:rgba(26,74,48,.2);color:#4A9A70;border:1px solid #2A5A38}
+.rt-observer{background:#1A2030;color:var(--faint);border:1px solid #2A3A4A}
+.lens-pill{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.08em;padding:2px 7px;
+  text-transform:uppercase;border:1px solid;
+  display:inline-block;
+}
+.lp-red{color:#CC5A50;border-color:#6A2A20;background:rgba(140,31,18,.1)}
+.lp-blue{color:#6A9ABE;border-color:#2A4A6A;background:rgba(26,48,80,.15)}
+.lp-green{color:#4A9A70;border-color:#2A5A38;background:rgba(26,74,48,.15)}
+.lp-gold{color:#C8A040;border-color:#6A5020;background:rgba(122,84,0,.15)}
+.lp-purple{color:#9A70CC;border-color:#4A2A7A;background:rgba(61,26,96,.15)}
+
+/* ── LENS PAGE ─────────────────────────────────────────── */
+.lens-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px}
+.lens-card{background:#0A0F1A;border:1px solid #1E2A3A;overflow:hidden}
+.lens-card-hdr{padding:14px 18px;border-bottom:1px solid #1E2A3A}
+.lens-card-hdr .lc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px}
+.lens-card-hdr .lc-name{font-size:14px;color:var(--paper);font-weight:500}
+.lens-card-body{padding:14px 18px}
+.lens-q{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px solid #1A2030;
+  font-size:13px;color:#B0A898;line-height:1.55;
+}
+.lens-q:last-child{border-bottom:none;padding-bottom:0}
+.lens-q-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);min-width:20px;margin-top:2px}
+.lens-holders{margin-top:20px}
+.lens-holders-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+.lens-holder-list{display:flex;flex-wrap:wrap;gap:6px}
+.lens-holder-chip{
+  font-size:12px;background:#1A2030;border:1px solid #2A3A4A;
+  padding:4px 10px;color:#9A9088;
+}
+.lens-card.full{grid-column:span 2}
+
+/* ── SCENARIO DEEP-DIVE ──────────────────────────────── */
+.scenario-tabs{display:flex;gap:0;margin-bottom:0;border-bottom:1px solid #1E2A3A}
+.scen-tab{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  letter-spacing:.08em;padding:10px 20px;
+  background:transparent;border:none;border-bottom:3px solid transparent;
+  color:var(--faint);cursor:pointer;transition:all .15s;
+  margin-bottom:-1px;
+}
+.scen-tab:hover{color:var(--paper)}
+.scen-tab.active{color:var(--paper);border-bottom-color:var(--signal)}
+.scen-tab.s2.active{border-bottom-color:#3A8ABE}
+.scen-tab.s3.active{border-bottom-color:var(--amber)}
+.scen-panel{display:none;padding-top:24px}
+.scen-panel.active{display:block}
+
+.inject-box{
+  background:#120810;border:1px solid;border-left-width:4px;
+  padding:18px 22px;margin-bottom:20px;
+}
+.inject-box.red{border-color:var(--signal)}
+.inject-box.blue{border-color:#2A6A9A}
+.inject-box.amber{border-color:var(--amber)}
+.inject-box-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
+.inject-box.red .inject-box-label{color:var(--signal)}
+.inject-box.blue .inject-box-label{color:#6A9ABE}
+.inject-box.amber .inject-box-label{color:#C8A040}
+.inject-text{font-size:13px;line-height:1.7;color:#C0B8B0}
+
+.primary-actors-box{
+  background:#0A0F1A;border:1px solid #2A3A4A;
+  padding:16px 20px;margin-bottom:20px;
+}
+.pab-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#C8A040;margin-bottom:12px}
+.actor-row{
+  display:flex;gap:12px;padding:8px 0;
+  border-bottom:1px solid #1A2030;
+  font-size:13px;align-items:flex-start;
+}
+.actor-row:last-child{border-bottom:none}
+.actor-name{color:var(--paper);font-weight:500;min-width:220px}
+.actor-prompt{color:#9A9088;line-height:1.5}
+
+.discussion-block{margin-bottom:20px}
+.disc-phase{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid #1E2A3A;
+  padding-bottom:6px;margin-bottom:10px;
+}
+.disc-q{
+  display:flex;gap:10px;padding:8px 0;
+  border-bottom:1px dotted #1A2030;
+  font-size:13px;color:#B0A898;line-height:1.55;
+}
+.disc-q:last-child{border-bottom:none}
+.disc-q-marker{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--signal);min-width:24px;margin-top:2px}
+.disc-q.lens .disc-q-marker{color:var(--amber)}
+
+.outcome-box{
+  background:#0A1A10;border:1px solid #1E3A28;
+  border-left:4px solid var(--green);
+  padding:16px 20px;
+}
+.outcome-box-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#4A9A70;margin-bottom:10px}
+.outcome-item{
+  display:flex;gap:10px;padding:6px 0;
+  font-size:13px;color:#A0C8B0;
+  border-bottom:1px solid #1A3020;
+}
+.outcome-item:last-child{border-bottom:none}
+.outcome-check{color:#2A9A60;font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:16px;margin-top:2px}
+
+/* ── HOT WASH PAGE ───────────────────────────────────── */
+.hotwash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.hw-box{background:#0A0F1A;border:1px solid #1E2A3A;overflow:hidden}
+.hw-box-hdr{padding:12px 16px;border-bottom:1px solid #1E2A3A}
+.hw-box-hdr.green{background:rgba(26,74,48,.15);border-bottom-color:#2A5A38}
+.hw-box-hdr.red{background:rgba(140,31,18,.1);border-bottom-color:#5A2018}
+.hw-box-hdr-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.hw-box-hdr.green .hw-box-hdr-label{color:#4A9A70}
+.hw-box-hdr.red .hw-box-hdr-label{color:var(--signal)}
+.hw-box-body{padding:16px}
+.write-line{
+  border:none;border-bottom:1px solid #2A3A4A;
+  display:block;width:100%;padding:8px 4px;
+  background:transparent;color:var(--paper);
+  font-family:'IBM Plex Sans',sans-serif;font-size:13px;
+  margin-bottom:10px;outline:none;
+  transition:border-color .15s;
+}
+.write-line:focus{border-bottom-color:var(--signal)}
+.write-line::placeholder{color:#3A4A5A}
+
+.action-table-wrapper{background:#0A0F1A;border:1px solid #1E2A3A;overflow:hidden;margin-bottom:20px}
+.atw-hdr{
+  padding:12px 16px;border-bottom:1px solid #1E2A3A;
+  background:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+}
+.action-row{
+  display:grid;grid-template-columns:1fr 180px 160px 120px;
+  gap:0;border-bottom:1px solid #1A2030;
+}
+.action-row:last-child{border-bottom:none}
+.action-row.header{background:#06080E}
+.action-cell{padding:10px 14px;font-size:12px;color:#9A9088;border-right:1px solid #1A2030}
+.action-cell:last-child{border-right:none}
+.action-cell.header-cell{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#3A4A5A}
+.action-input{
+  background:transparent;border:none;outline:none;
+  font-family:'IBM Plex Sans',sans-serif;font-size:12px;
+  color:var(--paper);width:100%;padding:0;
+}
+.action-input::placeholder{color:#2A3A4A}
+
+/* ── RISK & LEGAL PAGE ───────────────────────────────── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.track-table{width:100%;border-collapse:collapse}
+.track-table th{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);padding:8px 12px;text-align:left;
+  border-bottom:1px solid #1E2A3A;background:#06080E;
+}
+.track-table td{
+  padding:10px 12px;font-size:12px;
+  border-bottom:1px solid #1A2030;
+  vertical-align:top;line-height:1.55;color:#A0A898;
+}
+.track-table td:first-child{color:var(--paper);font-weight:500}
+.track-table .timeline-cell{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  color:var(--signal);white-space:nowrap;
+}
+.track-table tr:hover td{background:rgba(255,255,255,.02)}
+.track-header{
+  padding:14px 16px;border-bottom:1px solid #1E2A3A;
+  display:flex;align-items:center;gap:10px;
+}
+.track-name{font-family:'IBM Plex Serif',serif;font-size:17px;color:var(--paper)}
+.track-owner{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)}
+.track-box{background:#0A0F1A;border:1px solid #1E2A3A;overflow:hidden;margin-bottom:16px}
+
+/* ── FACILITATOR PAGE ────────────────────────────────── */
+.brief-box{
+  background:#06080E;
+  border:1px solid var(--signal);
+  border-left:4px solid var(--signal);
+  padding:24px 28px;margin-bottom:24px;
+  font-family:'IBM Plex Serif',serif;
+  font-size:15px;line-height:1.8;color:#D0C8C0;
+}
+.brief-box p{margin-bottom:16px}
+.brief-box p:last-child{margin-bottom:0}
+.brief-box strong{color:var(--paper)}
+.brief-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--signal);text-transform:uppercase;margin-bottom:16px;display:block}
+
+.tip-box{
+  background:#0A0E06;border:1px solid #2A3A28;
+  border-left:4px solid var(--green);
+  padding:14px 18px;margin-bottom:14px;
+  font-size:13px;color:#A0B8A0;line-height:1.6;
+}
+.tip-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#4A9A70;margin-bottom:6px}
+
+/* ── TIMER WIDGET ─────────────────────────────────────── */
+.timer-widget{
+  background:#0A0F1A;border:1px solid #1E2A3A;
+  padding:20px;margin-bottom:24px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.timer-display{
+  font-family:'IBM Plex Mono',monospace;font-size:42px;
+  color:var(--signal);letter-spacing:.05em;font-weight:600;min-width:160px;
+}
+.timer-display.running{color:#E89020;animation:pulse 1s ease-in-out infinite alternate}
+.timer-display.expired{color:var(--signal)}
+@keyframes pulse{from{opacity:1}to{opacity:.6}}
+.timer-controls{display:flex;gap:8px;flex-wrap:wrap}
+.timer-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;
+  padding:8px 16px;border:1px solid #2A3A4A;background:transparent;
+  color:var(--faint);cursor:pointer;transition:all .15s;text-transform:uppercase;
+}
+.timer-btn:hover{border-color:#5A6A7A;color:var(--paper)}
+.timer-btn.start-btn{border-color:var(--green);color:#4A9A70}
+.timer-btn.start-btn:hover{background:rgba(26,74,48,.2)}
+.timer-btn.reset-btn{border-color:var(--signal);color:var(--signal)}
+.timer-btn.reset-btn:hover{background:rgba(140,31,18,.1)}
+.timer-presets{display:flex;gap:6px;flex-wrap:wrap}
+.preset-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  padding:6px 12px;border:1px solid #1E2A3A;background:#06080E;
+  color:#5A6A7A;cursor:pointer;transition:all .15s;
+}
+.preset-btn:hover{border-color:#3A4A5A;color:var(--paper)}
+.timer-label{font-size:12px;color:var(--faint);margin-top:4px;font-family:'IBM Plex Mono',monospace}
+
+/* ── GENERAL COMPONENTS ──────────────────────────────── */
+.two-col-info{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.info-box{background:#0A0F1A;border:1px solid #1E2A3A;padding:18px 20px}
+.info-box-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.info-list li{font-size:13px;color:#A0A898;padding:5px 0;border-bottom:1px dotted #1A2030;list-style:none;display:flex;gap:8px;line-height:1.5}
+.info-list li::before{content:"—";color:var(--signal);font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:2px;flex-shrink:0}
+.info-list li:last-child{border-bottom:none}
+
+/* ── UTILITY ──────────────────────────────────────────── */
+.tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;padding:2px 7px;border:1px solid;text-transform:uppercase;display:inline-block;border-radius:1px}
+.tag-red{color:var(--signal);border-color:var(--signal);background:rgba(140,31,18,.1)}
+.tag-amber{color:#C8A040;border-color:var(--amber);background:rgba(122,84,0,.1)}
+.tag-green{color:#4A9A70;border-color:var(--green);background:rgba(26,74,48,.1)}
+.tag-blue{color:#6A9ABE;border-color:var(--blue);background:rgba(26,48,80,.1)}
+
+@media print{
+  .sidebar,.topbar,.timer-widget,.table-selector,.scen-tab,.scenario-tabs{display:none!important}
+  .main{margin-left:0}
+  .page{display:block!important;padding:20px}
+  body{background:white;color:black}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-eyebrow">Ramsey County — FOUO</div>
+    <div class="logo-title">Operation Fractured Grid</div>
+    <div class="logo-sub">CM Leadership Cabinet TTX</div>
+  </div>
+
+  <div class="sidebar-clock">
+    <div class="clock-label">Exercise Clock</div>
+    <div class="clock-time" id="liveClock">--:--:--</div>
+    <div class="clock-date" id="liveDate">Loading...</div>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-label">System Status</div>
+    <div class="status-item"><span class="status-dot red"></span>County Email — DOWN</div>
+    <div class="status-item"><span class="status-dot red"></span>County Network — DOWN</div>
+    <div class="status-item"><span class="status-dot red"></span>County Phones — DOWN</div>
+    <div class="status-item"><span class="status-dot red"></span>Payroll System — ENCRYPTED</div>
+    <div class="status-item"><span class="status-dot red"></span>RMS — INACCESSIBLE</div>
+    <div class="status-item"><span class="status-dot amber"></span>Personal Cells — USE WITH CAUTION</div>
+    <div class="status-item"><span class="status-dot green"></span>This Room — OPERATIONAL</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Overview</div>
+    <a class="nav-item active" onclick="showPage('situation')">
+      <span class="nav-icon">◈</span> Situation Brief
+    </a>
+    <a class="nav-item" onclick="showPage('agenda')">
+      <span class="nav-icon">◈</span> Agenda &amp; Structure
+    </a>
+
+    <div class="nav-section-label">Exercise</div>
+    <a class="nav-item" onclick="showPage('scenarios')">
+      <span class="nav-icon">◈</span> Scenarios
+      <span class="nav-badge">3</span>
+    </a>
+    <a class="nav-item" onclick="showPage('tables')">
+      <span class="nav-icon">◈</span> Table Assignments
+    </a>
+    <a class="nav-item" onclick="showPage('lenses')">
+      <span class="nav-icon">◈</span> Lens Cards
+    </a>
+    <a class="nav-item" onclick="showPage('facilitator')">
+      <span class="nav-icon">◈</span> Facilitator Guide
+    </a>
+    <a class="nav-item" onclick="showPage('timer')">
+      <span class="nav-icon">◈</span> Exercise Timer
+    </a>
+
+    <div class="nav-section-label">Parallel Tracks</div>
+    <a class="nav-item" onclick="showPage('risk')">
+      <span class="nav-icon">◈</span> Risk &amp; Legal Track
+    </a>
+    <a class="nav-item" onclick="showPage('hotwash')">
+      <span class="nav-icon">◈</span> Hot Wash Capture
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    FOR OFFICIAL USE ONLY<br>
+    DO NOT DISTRIBUTE — V3.0
+  </div>
+</aside>
+
+<!-- ══ MAIN ══════════════════════════════════════════════ -->
+<main class="main">
+
+  <div class="topbar">
+    <div class="topbar-breadcrumb">
+      Operation Fractured Grid <span>›</span> <span id="breadcrumbCurrent">Situation Brief</span>
+    </div>
+    <div class="topbar-right">
+      <div class="exercise-status">⚠ EXERCISE IN PROGRESS</div>
+      <button class="btn-print" onclick="window.print()">Print ↗</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: SITUATION                           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page active" id="page-situation">
+    <div class="section-eyebrow">Situation Brief</div>
+    <div class="section-heading">Operation Fractured Grid</div>
+    <div class="section-sub">What participants walk into — 9:30 AM Tuesday</div>
+    <div class="rule-line"></div>
+
+    <div class="situation-banner">
+      It is <strong>9:30 AM Tuesday</strong>. At 7:18 AM, the IT help desk began receiving calls. Employees couldn't log in. By 8:00 AM, the CISO confirmed ransomware is running across Ramsey County's systems. <strong>Summit, Aspen, Outlook, property tax systems, Environmental Health, Vital Records, LaserFiche, and county phones are offline or compromised.</strong> A ransom note demands $2.3 million.
+      <br><br>
+      You are now in this room together. This exercise does not attempt to solve the ransomware. <strong>It focuses on three things that cannot wait days — they need a decision and a plan in the next few hours.</strong>
+    </div>
+
+    <div class="constraint-grid">
+      <div class="constraint-card">
+        <div class="constraint-icon">✕</div>
+        <div class="constraint-title">No County Computers</div>
+        <div class="constraint-text">All workstations and laptops are inaccessible or untrustworthy. Do not use them.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-icon">✕</div>
+        <div class="constraint-title">No County Network</div>
+        <div class="constraint-text">No shared drives, no intranet, no VPN. The county network is fully compromised.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-icon">✕</div>
+        <div class="constraint-title">No County Email</div>
+        <div class="constraint-text">Microsoft 365 / Outlook is unavailable. No internal or external county email.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-icon">✕</div>
+        <div class="constraint-title">No County Phones</div>
+        <div class="constraint-text">Desk phones, Jabber, and the internal phone system are all down.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-icon">⚠</div>
+        <div class="constraint-title">County Cells — Caution</div>
+        <div class="constraint-text">County-issued cell phones may be compromised. Treat with caution.</div>
+      </div>
+      <div class="constraint-card" style="border-top-color:var(--green)">
+        <div class="constraint-icon" style="color:var(--green)">✓</div>
+        <div class="constraint-title" style="color:var(--green)">What You Have</div>
+        <div class="constraint-text">Personal cell phones, personal email, paper, and each other in this room.</div>
+      </div>
+    </div>
+
+    <div class="two-col-info">
+      <div class="info-box">
+        <div class="info-box-label">Three Problems That Cannot Wait</div>
+        <ul class="info-list">
+          <li><strong>Payroll runs in 48 hours.</strong> The system that processes it is encrypted. 2,400 employees. No documented manual backup.</li>
+          <li><strong>Residents have no way to reach us.</strong> Ramsey Info Line down. Website unreachable. County phones dead. FAS clients, Housing clients, Public Health — all cut off.</li>
+          <li><strong>Sheriff's RMS is inaccessible.</strong> Deputies are on paper. A 1 PM court case, an incomplete evidence chain, and a warrant in unknown status.</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">What This Exercise Produces</div>
+        <ul class="info-list">
+          <li>Named decisions on all three problems — made in this room, today</li>
+          <li>Identified gaps — things we don't have, don't know, or can't do</li>
+          <li>Named owners with personal contact numbers for each action</li>
+          <li>A starting list for the After-Action Report</li>
+          <li>A shared understanding across all 46 leaders before a real event occurs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: AGENDA                              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page" id="page-agenda">
+    <div class="section-eyebrow">Run of Show</div>
+    <div class="section-heading">2-Hour Agenda</div>
+    <div class="section-sub">All tables work simultaneously. Nobody watches. Nobody waits.</div>
+    <div class="rule-line"></div>
+
+    <table class="agenda-table">
+      <thead>
+        <tr><th>Clock</th><th>Duration</th><th>Phase</th><th>Activity</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="time-cell">0:00</td><td class="dur-cell">15 min</td><td><span class="phase-open">Opening</span></td><td>Facilitator reads Context Brief aloud. Ground rules. Table anchors and scribes confirmed. Lens card holders review their 3 questions. County Manager sets the tone.</td></tr>
+        <tr><td class="time-cell">0:15</td><td class="dur-cell">25 min</td><td><span class="phase-scenario">SCENARIO 1 — Payroll</span></td><td>All five tables discuss simultaneously. Primary actors lead. Lens holders raise their questions. Table scribes capture decisions and gaps.</td></tr>
+        <tr><td class="time-cell">0:40</td><td class="dur-cell">10 min</td><td><span class="phase-report">Report-Out S1</span></td><td>One person per table — 60 seconds max. One decision made, one gap found. Room Scribe consolidates. County Manager reacts.</td></tr>
+        <tr><td class="time-cell">0:50</td><td class="dur-cell">5 min</td><td><span class="phase-break">Break</span></td><td>—</td></tr>
+        <tr><td class="time-cell">0:55</td><td class="dur-cell">25 min</td><td><span class="phase-scenario" style="color:#3A8ABE">SCENARIO 2 — Resident Comms</span></td><td>All five tables discuss simultaneously. Primary actors lead. Lens holders raise their questions. Table scribes capture.</td></tr>
+        <tr><td class="time-cell">1:20</td><td class="dur-cell">8 min</td><td><span class="phase-report">Report-Out S2</span></td><td>One person per table — 60 seconds max. One decision, one gap. County Manager reacts.</td></tr>
+        <tr><td class="time-cell">1:28</td><td class="dur-cell">2 min</td><td><span class="phase-break">Pivot</span></td><td>Facilitator introduces Scenario 3. No break.</td></tr>
+        <tr><td class="time-cell">1:30</td><td class="dur-cell">18 min</td><td><span class="phase-scenario" style="color:#C8A040">SCENARIO 3 — RMS</span></td><td>All five tables discuss simultaneously. Primary actors lead. Lens holders raise questions.</td></tr>
+        <tr><td class="time-cell">1:48</td><td class="dur-cell">12 min</td><td><span class="phase-open">Hot Wash</span></td><td>Each table names top gap only — 30 seconds per table. County Manager assigns 3 actions with owners. Room Scribe reads all captured items. Exercise closes.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="two-col-info">
+      <div class="info-box">
+        <div class="info-box-label">How Tables Work</div>
+        <ul class="info-list">
+          <li><strong>5 tables of ~9 people</strong> — all work every scenario simultaneously</li>
+          <li><strong>Table Anchor</strong> — one senior leader keeps discussion moving and drives toward a decision</li>
+          <li><strong>Primary Actors</strong> — 2–4 named people who speak first in each scenario</li>
+          <li><strong>Lens Holders</strong> — everyone else holds a colored card with 3 standing questions they raise in every scenario</li>
+          <li><strong>Table Scribe</strong> — one person captures decisions and gaps throughout</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">Ground Rules</div>
+        <ul class="info-list">
+          <li><strong>Play your actual role</strong> — use your real authority and real resources</li>
+          <li><strong>No fault, no blame</strong> — gaps found here protect the county from real harm</li>
+          <li><strong>Minimize distractions</strong> — personal devices only for exercise participation</li>
+          <li><strong>FREEZE means pause</strong> — facilitator controls timing and pivots</li>
+          <li><strong>Work from available information</strong> — make decisions without perfect information, as in a real event</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: SCENARIOS                           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page" id="page-scenarios">
+    <div class="section-eyebrow">Scenario Deep-Dive</div>
+    <div class="section-heading">Three Problems. 68 Minutes. Every Table.</div>
+    <div class="section-sub">Select a scenario to view the inject, primary actors, discussion guide, and desired outcomes.</div>
+    <div class="rule-line"></div>
+
+    <div class="scenario-tabs">
+      <button class="scen-tab s1 active" onclick="showScenario('s1',this)">SCENARIO 1 — Payroll</button>
+      <button class="scen-tab s2" onclick="showScenario('s2',this)">SCENARIO 2 — Resident Comms</button>
+      <button class="scen-tab s3" onclick="showScenario('s3',this)">SCENARIO 3 — RMS</button>
+    </div>
+
+    <!-- S1 -->
+    <div class="scen-panel active" id="scen-s1">
+      <div class="inject-box red">
+        <div class="inject-box-label">⚠ Inject — Read Aloud to All Tables</div>
+        <div class="inject-text">
+          The payroll processing system sits on one of the encrypted servers. Payroll runs in exactly <strong>48 hours</strong>. If it doesn't run, all county employees — deputies, social workers, public health nurses, parks staff, public works crews, library staff, everyone in this room — will not receive their paycheck on time. Union contracts require on-time payment. Late payroll triggers financial penalties. <strong>There is no documented manual payroll backup procedure. The payroll vendor's contact information is in a system that is currently encrypted.</strong>
+          <br><br><em>Your table has 25 minutes. What do you do?</em>
+        </div>
+      </div>
+
+      <div class="primary-actors-box">
+        <div class="pab-label">Primary Actors — These People Speak First at Every Table</div>
+        <div class="actor-row"><div class="actor-name">Cruver, Amelia — CFO</div><div class="actor-prompt">What is your financial emergency authorization authority? What is the spending limit before you need Board approval?</div></div>
+        <div class="actor-row"><div class="actor-name">Ferguson, Patience — CHRO</div><div class="actor-prompt">Do you have the payroll vendor's emergency contact number accessible right now — not in a county system?</div></div>
+        <div class="actor-row"><div class="actor-name">Nelson, Tracy — Acting CIO</div><div class="actor-prompt">Is there any possibility of isolated system recovery for payroll in 48 hours? Be honest with the room.</div></div>
+        <div class="actor-row"><div class="actor-name">Lewis, Jada — County Attorney</div><div class="actor-prompt">What is the legal exposure for one day of late payroll? What emergency authorization mechanisms exist in county code?</div></div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 1–8 — Open the Problem</div>
+        <div class="disc-q"><span class="disc-q-marker">Q1</span>CFO: Walk us through the first call you make. To what number on your personal phone?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q2</span>CHRO: Do you have the payroll vendor on speed dial on your personal phone right now?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q3</span>CIO: Honest assessment — can any part of the payroll system be brought back in isolation without restoring the full network?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q4</span>What are ALL the options? Name them: paper checks, bank wire transfer, ACH from a clean device, emergency payroll advance, manual processing at the bank?</div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 8–18 — Make Decisions</div>
+        <div class="disc-q"><span class="disc-q-marker">Q5</span>Who in this room has authority to authorize emergency payroll outside the normal system? Name the threshold where it escalates to the County Manager or Board.</div>
+        <div class="disc-q"><span class="disc-q-marker">Q6</span>CHRO: Union contracts require on-time payment. What do you tell union reps right now, using personal channels?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q7</span>If we issue emergency manual checks — who physically signs them? Where is blank check stock stored? Is it accessible right now?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q8</span>What do employees hear, and through what channel? Not county email — that's gone. Personal texts? A hotline? Social media?</div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 18–25 — Lens Holders</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🔴</span>PEOPLE LENS: Who among our employees is most at risk from a missed paycheck — and are we solving for them, not just the majority?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🔵</span>LEGAL/ETHICS LENS: What is our legal notification requirement to employees if payroll will be late? Is there a clock running right now?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟢</span>OPERATIONS LENS: What breaks in field operations if crews don't know their pay status by end of day?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟡</span>COMMS LENS: What is the risk if an employee leaks the payroll situation to media before we have a plan?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟣</span>EXECUTIVE LENS: At what point does this become a County Board issue? What's the trigger, and who makes that call?</div>
+      </div>
+
+      <div class="outcome-box">
+        <div class="outcome-box-label">Desired Outcomes — What This Scenario Should Produce</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>A named decision: how payroll gets executed or communicated if systems are not restored in 48 hours</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Payroll vendor emergency contact confirmed — exists outside county systems, and someone has it</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Financial emergency authorization threshold named — CFO limit, County Manager limit, Board threshold</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Employee communication channel identified (not county email) with a draft first sentence</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Cyber insurance carrier notification confirmed — who calls, what number, by when</div>
+      </div>
+    </div>
+
+    <!-- S2 -->
+    <div class="scen-panel" id="scen-s2">
+      <div class="inject-box blue">
+        <div class="inject-box-label">⚠ Inject — Read Aloud to All Tables</div>
+        <div class="inject-text">
+          It is 10:15 AM. Local TV has published: <strong>"Ramsey County Hit By Cyberattack — All County Services Down."</strong> Social media is flooding. Residents are panicking. Are my benefits safe? Is my permit being processed? Is the county even open?
+          <br><br>
+          <strong>The Ramsey Info Line and all helpdesk lines are down. The county website is unreachable. County email is gone. Every public phone number routes to phones that don't work. Residents have no way to reach Ramsey County.</strong>
+          <br><br>
+          Additionally: FAS clients cannot get benefits verified. Housing Stability has clients with authorizations expiring today. Public Health clinic appointment confirmations are failing.
+          <br><br><em>The county needs a resident-facing communication channel live within 2 hours. Your table has 25 minutes. What is it, and who runs it?</em>
+        </div>
+      </div>
+
+      <div class="primary-actors-box">
+        <div class="pab-label">Primary Actors — These People Speak First at Every Table</div>
+        <div class="actor-row"><div class="actor-name">Lindsay, Rose — Dir. Communications</div><div class="actor-prompt">What is the one channel you can stand up in 90 minutes? Walk the table through it step by step.</div></div>
+        <div class="actor-row"><div class="actor-name">Pass, Nancie — Dir. Emergency Comm.</div><div class="actor-prompt">Does the county have a backup emergency communication protocol independent of county systems? What is it?</div></div>
+        <div class="actor-row"><div class="actor-name">Ali, Ali — Director FAS</div><div class="actor-prompt">For clients with urgent benefits needs today, what is the manual intake process right now?</div></div>
+        <div class="actor-row"><div class="actor-name">Wilkins, Jaime — Housing Stability</div><div class="actor-prompt">For authorizations expiring today — what is the manual authorization process? Who signs off?</div></div>
+        <div class="actor-row"><div class="actor-name">Yang, Pang H — Library Director</div><div class="actor-prompt">Are library branches open? Do they have working phones? Can a branch serve as an in-person county information point today?</div></div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 1–8 — Name the Channel</div>
+        <div class="disc-q"><span class="disc-q-marker">Q1</span>What are ALL the options? Personal cell on rotation, Google Voice number, library phones, a temporary service line, social media only?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q2</span>Does the county have admin access to its social media accounts from a personal device? Who holds those credentials? Can they post right now?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q3</span>Library Director Yang: Which branches are open today? Can one be designated as a county information point in the next hour?</div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 8–18 — Build the Message and Process</div>
+        <div class="disc-q"><span class="disc-q-marker">Q4</span>What is the first sentence residents will hear or read? Draft it at your table right now. Say it out loud.</div>
+        <div class="disc-q"><span class="disc-q-marker">Q5</span>Without email, how does that message get approved? Who approves it via personal channels, and in what timeframe?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q6</span>FAS / Social Services: What does manual intake look like today? Is there a paper form? Who signs emergency service authorizations?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q7</span>Housing Stability: Name the manual authorization process for expiring cases. Who calls whom, on what personal number, to authorize a housing placement today?</div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 18–25 — Lens Holders</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🔴</span>PEOPLE LENS: Who cannot reach us no matter what channel we set up — no phone, no internet, no car? What do we do for them?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🔵</span>LEGAL/ETHICS LENS: What can and cannot be said publicly about a potential data breach before we know what was taken?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟢</span>OPERATIONS LENS: Front-line FAS, Social Services, Housing, and Public Health staff are being asked questions they can't answer. What do we tell them to say right now?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟡</span>COMMS LENS: A Board member just posted something incorrect on their personal social media. Who calls them, on what number, and what do we ask them to say instead?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟣</span>EXECUTIVE LENS: The County Manager needs to be visible to the public right now. What does that look like without county systems — press conference, personal social media, library steps?</div>
+      </div>
+
+      <div class="outcome-box">
+        <div class="outcome-box-label">Desired Outcomes — What This Scenario Should Produce</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>A named, specific communication channel live within 2 hours — and the person who owns it with their personal contact</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>A holding message drafted in the room — one sentence — approved via personal channels</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Confirmation of which social media accounts are accessible via personal device and who posts on them</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>A named manual intake process for FAS and Housing Stability clients with urgent needs today</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>State notification requirements confirmed — MN Statute § 13.055 — who calls, what number, by when</div>
+      </div>
+    </div>
+
+    <!-- S3 -->
+    <div class="scen-panel" id="scen-s3">
+      <div class="inject-box amber">
+        <div class="inject-box-label">⚠ Inject — Read Aloud to All Tables</div>
+        <div class="inject-text">
+          The Sheriff's Records Management System (RMS) — a cloud-hosted vendor system — is inaccessible because it connects through county network infrastructure that is now compromised. Deputies cannot access incident reports, case files, arrest records, warrant lookups, or evidence tracking. <strong>They are on paper.</strong>
+          <br><br>
+          Three specific problems in the last 30 minutes:
+          <ul style="margin:10px 0 10px 20px;line-height:1.8">
+            <li>A prosecutor needs a case file for a <strong>1:00 PM court appearance</strong>. The file is in the RMS.</li>
+            <li>An evidence submission for an active investigation was being logged when the system went down. <strong>Chain of custody documentation is incomplete.</strong></li>
+            <li>A warrant being processed through the system is in an <strong>unknown state</strong> — it may or may not have been formally entered before the outage.</li>
+          </ul>
+          The RMS vendor says the problem appears to be on the county network side. They cannot give a restoration timeline.
+          <br><br><em>Your table has 18 minutes.</em>
+        </div>
+      </div>
+
+      <div class="primary-actors-box">
+        <div class="pab-label">Primary Actors — These People Speak First at Every Table</div>
+        <div class="actor-row"><div class="actor-name">Mestad, Kyle — Undersheriff</div><div class="actor-prompt">Does the Sheriff's office have a written manual backup protocol? Has it ever been activated? Does every deputy know what to do?</div></div>
+        <div class="actor-row"><div class="actor-name">Lewis, Jada — County Attorney</div><div class="actor-prompt">Walk the table through the three immediate legal problems: the 1 PM court case, the evidence gap, the warrant.</div></div>
+        <div class="actor-row"><div class="actor-name">Long, Monica — Community Corrections</div><div class="actor-prompt">What breaks in corrections operations if the RMS stays down through tonight?</div></div>
+        <div class="actor-row"><div class="actor-name">Nelson, Tracy — Acting CIO</div><div class="actor-prompt">Is there a way to restore RMS access without restoring the full county network? Is there an escalation path above standard vendor support?</div></div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 1–6 — The Three Legal Problems</div>
+        <div class="disc-q"><span class="disc-q-marker">Q1</span>The 1:00 PM court case — County Attorney Lewis: emergency continuance request? Manual records pull? Who calls the court and on what personal number?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q2</span>Evidence chain-of-custody gap: what must be documented on paper right now to preserve the case? Who owns that documentation?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q3</span>The warrant in unknown status: who does the Undersheriff call to verify? On what channel? What is the risk if a questionable warrant is executed?</div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 6–14 — Operational Sustainability</div>
+        <div class="disc-q"><span class="disc-q-marker">Q4</span>How long can law enforcement sustain full paper operations? What is the breaking point — in hours — before public safety is at risk?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q5</span>Mutual aid agreements with St. Paul PD, Washington County, Dakota County — do any cover records system support? Who activates them?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q6</span>If a deputy makes an arrest tonight and RMS is still down — walk through exactly what happens. Who has the paper record? Where does it go?</div>
+        <div class="disc-q"><span class="disc-q-marker">Q7</span>CIO: does the RMS vendor have a standalone emergency portal or temporary VPN path that bypasses the county network entirely?</div>
+      </div>
+
+      <div class="discussion-block">
+        <div class="disc-phase">Minutes 14–18 — Lens Holders</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🔴</span>PEOPLE LENS: Who is most vulnerable if law enforcement operations are degraded — and are there communities that already distrust the system needing special consideration?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🔵</span>LEGAL/ETHICS LENS: If the vendor contract holds them harmless for county-side outages, what leverage does the county have to demand emergency alternative access?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟢</span>OPERATIONS LENS: What's the cascading effect on Community Corrections, courts, and prosecutors if the RMS backlog grows for 24+ hours?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟡</span>COMMS LENS: Does the public need to know that law enforcement records are down? What's the risk if they find out from another source first?</div>
+        <div class="disc-q lens"><span class="disc-q-marker">🟣</span>EXECUTIVE LENS: At what point does a degraded law enforcement records system require a formal emergency declaration? Who makes that call?</div>
+      </div>
+
+      <div class="outcome-box">
+        <div class="outcome-box-label">Desired Outcomes — What This Scenario Should Produce</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Specific action plan for the 1:00 PM court case — who calls the court, what they say, and on what number</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Paper evidence chain-of-custody process confirmed by the County Attorney</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Named person to verify the warrant status and through what channel</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>RMS vendor escalation path identified above standard support line</div>
+        <div class="outcome-item"><span class="outcome-check">→</span>Mutual aid options confirmed — who activates them and through what channel</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: TABLE ASSIGNMENTS                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page" id="page-tables">
+    <div class="section-eyebrow">Room Setup</div>
+    <div class="section-heading">Table Assignments</div>
+    <div class="section-sub">5 tables of ~9. Every table works every scenario simultaneously.</div>
+    <div class="rule-line"></div>
+
+    <div class="table-selector">
+      <button class="table-btn tA active-tbl" onclick="showTable('A',this)">TABLE A — Payroll &amp; Finance</button>
+      <button class="table-btn tB" onclick="showTable('B',this)">TABLE B — Communications</button>
+      <button class="table-btn tC" onclick="showTable('C',this)">TABLE C — Law &amp; Legal</button>
+      <button class="table-btn tD" onclick="showTable('D',this)">TABLE D — Operations</button>
+      <button class="table-btn tE" onclick="showTable('E',this)">TABLE E — Executive</button>
+    </div>
+
+    <div id="table-panels">
+
+      <div class="table-panel active" id="tpanel-A">
+        <div class="table-card">
+          <div class="table-card-header" style="border-left:4px solid var(--signal)">
+            <div>
+              <div class="tch-label" style="color:var(--signal)">Table A</div>
+              <div class="tch-name">Payroll &amp; Finance</div>
+              <div class="tch-sub">Primary table for Scenario 1</div>
+            </div>
+          </div>
+          <table class="members-table">
+            <thead><tr><th>Name</th><th>Title</th><th>Exercise Role</th><th>Lens</th></tr></thead>
+            <tbody>
+              <tr><td class="name-cell">Cruver, Amelia</td><td>Chief Financial Officer</td><td><span class="role-tag rt-anchor">Table Anchor</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Ferguson, Patience</td><td>Chief Human Resources Officer</td><td><span class="role-tag rt-primary">Primary — S1</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Gadea, Abigail</td><td>Deputy Director — HR</td><td><span class="role-tag rt-primary">Primary — S1</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Nelson, Tracy</td><td>Acting Director IS / CIO</td><td><span class="role-tag rt-primary">Primary — S1,2,3</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Thompson, Sophia</td><td>Director — Social Services</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-red">People</span></td></tr>
+              <tr><td class="name-cell">Moore, William</td><td>Racial &amp; Health Equity Admin</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-blue">Legal &amp; Ethics</span></td></tr>
+              <tr><td class="name-cell">Davis, Catrice</td><td>Director — Workforce Solutions</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-red">People</span></td></tr>
+              <tr><td class="name-cell">Schultz, Kristen L</td><td>Deputy Director HR</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">DeWalt, Larina</td><td>Director of Administration — EGCI</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Hunter, Lindsay</td><td>Principal Admin Assistant</td><td><span class="role-tag rt-scribe">Table Scribe</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-panel" id="tpanel-B">
+        <div class="table-card">
+          <div class="table-card-header" style="border-left:4px solid #3A8ABE">
+            <div>
+              <div class="tch-label" style="color:#3A8ABE">Table B</div>
+              <div class="tch-name">Communications &amp; Public Facing</div>
+              <div class="tch-sub">Primary table for Scenario 2</div>
+            </div>
+          </div>
+          <table class="members-table">
+            <thead><tr><th>Name</th><th>Title</th><th>Exercise Role</th><th>Lens</th></tr></thead>
+            <tbody>
+              <tr><td class="name-cell">Lindsay, Rose</td><td>Director — Communications &amp; PR</td><td><span class="role-tag rt-anchor">Table Anchor</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Pass, Nancie</td><td>Director — Emergency Communications</td><td><span class="role-tag rt-primary">Primary — S2</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Ali, Ali</td><td>Director — FAS</td><td><span class="role-tag rt-primary">Primary — S2</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Wilkins, Jaime</td><td>Director — Housing Stability</td><td><span class="role-tag rt-primary">Primary — S2</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Yang, Pang H</td><td>Director — Ramsey County Library</td><td><span class="role-tag rt-primary">Primary — S2</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Donaway, Melinda K</td><td>Director of Administration — County Ops</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Wood, Jolie</td><td>Director — Government Relations</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-gold">Comms &amp; External</span></td></tr>
+              <tr><td class="name-cell">Beane, Nicole</td><td>American Indian Relations Admin</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-red">People</span></td></tr>
+              <tr><td class="name-cell">Timmerman, Larry</td><td>Director of Administration — Health &amp; Wellness</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Olson, Josh</td><td>Dep. Dir. — Comm. &amp; Econ. Development</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-gold">Comms &amp; External</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-panel" id="tpanel-C">
+        <div class="table-card">
+          <div class="table-card-header" style="border-left:4px solid var(--amber)">
+            <div>
+              <div class="tch-label" style="color:var(--amber)">Table C</div>
+              <div class="tch-name">Law Enforcement &amp; Legal</div>
+              <div class="tch-sub">Primary table for Scenario 3</div>
+            </div>
+          </div>
+          <table class="members-table">
+            <thead><tr><th>Name</th><th>Title</th><th>Exercise Role</th><th>Lens</th></tr></thead>
+            <tbody>
+              <tr><td class="name-cell">Lewis, Jada</td><td>Division Director — County Attorney</td><td><span class="role-tag rt-anchor">Table Anchor</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Mestad, Kyle</td><td>Undersheriff, Chief of Staff</td><td><span class="role-tag rt-primary">Primary — S3</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Long, Monica S</td><td>Director — Community Corrections</td><td><span class="role-tag rt-primary">Primary — S3</span></td><td>—</td></tr>
+              <tr><td class="name-cell">West, Tracy M</td><td>Director — PropTx, Rec. &amp; Election Svcs</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Chapman, Patrick</td><td>Director — County Assessor Dept</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Pesik, Deanna</td><td>Chief Ethics &amp; Compliance Officer</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-blue">Legal &amp; Ethics</span></td></tr>
+              <tr><td class="name-cell">Guenther, Angie</td><td>Racial &amp; Health Equity Admin</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-red">People</span></td></tr>
+              <tr><td class="name-cell">(Table Scribe TBD)</td><td>—</td><td><span class="role-tag rt-scribe">Table Scribe</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-panel" id="tpanel-D">
+        <div class="table-card">
+          <div class="table-card-header" style="border-left:4px solid var(--green)">
+            <div>
+              <div class="tch-label" style="color:var(--green)">Table D</div>
+              <div class="tch-name">Operations &amp; Infrastructure</div>
+              <div class="tch-sub">Cross-scenario operational perspective</div>
+            </div>
+          </div>
+          <table class="members-table">
+            <thead><tr><th>Name</th><th>Title</th><th>Exercise Role</th><th>Lens</th></tr></thead>
+            <tbody>
+              <tr><td class="name-cell">Kotze, Alexandra</td><td>Dep. Co. Mgr. — Chief Operating Officer</td><td><span class="role-tag rt-anchor">Table Anchor</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Isaacson, Brian</td><td>Director — Public Works</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">McCabe, Mark</td><td>Director — Parks &amp; Recreation</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Caron, Amy</td><td>Director — Public Health</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Krueger, Jean</td><td>Director — Property Management</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Yang, Jason</td><td>Director Administrative Svcs / Chief Clerk</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-gold">Comms &amp; External</span></td></tr>
+              <tr><td class="name-cell">Bach, Tara</td><td>Director of Administration — Safety &amp; Justice</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Zaffrann, David M</td><td>Director of Administration — Comm. Services</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-green">Operations</span></td></tr>
+              <tr><td class="name-cell">Rost, Christina</td><td>Director — Veterans Services</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-red">People</span></td></tr>
+              <tr><td class="name-cell">(Table Scribe TBD)</td><td>—</td><td><span class="role-tag rt-scribe">Table Scribe</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-panel" id="tpanel-E">
+        <div class="table-card">
+          <div class="table-card-header" style="border-left:4px solid var(--purple)">
+            <div>
+              <div class="tch-label" style="color:#9A70CC">Table E</div>
+              <div class="tch-name">Executive &amp; Strategy</div>
+              <div class="tch-sub">Final decision authority — escalation table</div>
+            </div>
+          </div>
+          <table class="members-table">
+            <thead><tr><th>Name</th><th>Title</th><th>Exercise Role</th><th>Lens</th></tr></thead>
+            <tbody>
+              <tr><td class="name-cell">Becker, Ling</td><td>County Manager</td><td><span class="role-tag rt-anchor">Table Anchor — Floats All Tables</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Sarabia, Maria</td><td>Chief of Staff</td><td><span class="role-tag rt-primary">Primary — All Scenarios</span></td><td>—</td></tr>
+              <tr><td class="name-cell">Abdi, Nadir</td><td>Deputy County Manager</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-purple">Executive</span></td></tr>
+              <tr><td class="name-cell">Collins, Kari E</td><td>Deputy County Manager</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-purple">Executive</span></td></tr>
+              <tr><td class="name-cell">Francois, Karen</td><td>Deputy County Manager</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-purple">Executive</span></td></tr>
+              <tr><td class="name-cell">Reyes, Gloria</td><td>Deputy County Manager</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-purple">Executive</span></td></tr>
+              <tr><td class="name-cell">Greenlee, Andrew</td><td>Deputy Chief of Staff</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-purple">Executive</span></td></tr>
+              <tr><td class="name-cell">Jackson, Aaronica</td><td>Racial &amp; Health Equity Admin</td><td><span class="role-tag rt-lens">Lens</span></td><td><span class="lens-pill lp-blue">Legal &amp; Ethics</span></td></tr>
+              <tr><td class="name-cell">Soukup, Margaret E</td><td>Admin Assistant 4</td><td><span class="role-tag rt-scribe">Room Scribe — Floats</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: LENSES                              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page" id="page-lenses">
+    <div class="section-eyebrow">Participant Role Cards</div>
+    <div class="section-heading">The Lens System</div>
+    <div class="section-sub">Every non-primary-actor holds a lens card. Three questions. Every scenario. No waiting to be called on.</div>
+    <div class="rule-line"></div>
+
+    <div class="lens-grid">
+      <div class="lens-card">
+        <div class="lens-card-hdr" style="border-left:4px solid var(--signal)">
+          <div class="lc-label" style="color:var(--signal)">🔴 People Lens</div>
+          <div class="lc-name">Employee &amp; Resident Impact</div>
+        </div>
+        <div class="lens-card-body">
+          <div class="lens-q"><span class="lens-q-num">Q1</span>Who among our employees or residents is most harmed if this decision goes wrong — and are they represented in this conversation?</div>
+          <div class="lens-q"><span class="lens-q-num">Q2</span>What does this look like for someone who depends on county services to survive — a benefits recipient, an hourly worker, someone without a car or internet, an incarcerated person needing healthcare?</div>
+          <div class="lens-q"><span class="lens-q-num">Q3</span>Are we making decisions that work for the majority but leave the most vulnerable behind?</div>
+        </div>
+        <div style="padding:0 18px 14px">
+          <div class="lens-holders-label">Lens Holders</div>
+          <div class="lens-holder-list">
+            <span class="lens-holder-chip">Thompson, Sophia</span><span class="lens-holder-chip">Davis, Catrice</span><span class="lens-holder-chip">Beane, Nicole</span><span class="lens-holder-chip">Rost, Christina</span><span class="lens-holder-chip">Guenther, Angie</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lens-card">
+        <div class="lens-card-hdr" style="border-left:4px solid #3A8ABE">
+          <div class="lc-label" style="color:#6A9ABE">🔵 Legal &amp; Ethics Lens</div>
+          <div class="lc-name">Legal &amp; Ethics Watchdog</div>
+        </div>
+        <div class="lens-card-body">
+          <div class="lens-q"><span class="lens-q-num">Q1</span>Is there a legal obligation being triggered right now that we haven't named? A notification deadline, a statutory requirement, a contract clause?</div>
+          <div class="lens-q"><span class="lens-q-num">Q2</span>Is there an ethical dimension to this decision — something technically allowed but that we'd be uncomfortable defending publicly?</div>
+          <div class="lens-q"><span class="lens-q-num">Q3</span>Who is legally accountable if this goes wrong — and have we protected that person with proper documentation and authority?</div>
+        </div>
+        <div style="padding:0 18px 14px">
+          <div class="lens-holders-label">Lens Holders</div>
+          <div class="lens-holder-list">
+            <span class="lens-holder-chip">Moore, William</span><span class="lens-holder-chip">Pesik, Deanna</span><span class="lens-holder-chip">Jackson, Aaronica</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lens-card">
+        <div class="lens-card-hdr" style="border-left:4px solid var(--green)">
+          <div class="lc-label" style="color:#4A9A70">🟢 Operations Lens</div>
+          <div class="lc-name">Operational Continuity</div>
+        </div>
+        <div class="lens-card-body">
+          <div class="lens-q"><span class="lens-q-num">Q1</span>What breaks in day-to-day county operations if this decision is implemented — field crews, facilities, front-line services?</div>
+          <div class="lens-q"><span class="lens-q-num">Q2</span>Is there a manual backup process for whatever we're losing? Has anyone ever actually tested it? Does a COOP plan exist?</div>
+          <div class="lens-q"><span class="lens-q-num">Q3</span>How long can we sustain this workaround before it creates a new crisis of its own?</div>
+        </div>
+        <div style="padding:0 18px 14px">
+          <div class="lens-holders-label">Lens Holders</div>
+          <div class="lens-holder-list">
+            <span class="lens-holder-chip">Schultz, Kristen</span><span class="lens-holder-chip">DeWalt, Larina</span><span class="lens-holder-chip">Donaway, Melinda</span><span class="lens-holder-chip">Timmerman, Larry</span><span class="lens-holder-chip">West, Tracy</span><span class="lens-holder-chip">Chapman, Patrick</span><span class="lens-holder-chip">Isaacson, Brian</span><span class="lens-holder-chip">McCabe, Mark</span><span class="lens-holder-chip">Caron, Amy</span><span class="lens-holder-chip">Krueger, Jean</span><span class="lens-holder-chip">Bach, Tara</span><span class="lens-holder-chip">Zaffrann, David</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lens-card">
+        <div class="lens-card-hdr" style="border-left:4px solid var(--amber)">
+          <div class="lc-label" style="color:#C8A040">🟡 Comms &amp; External Lens</div>
+          <div class="lc-name">Communications &amp; External</div>
+        </div>
+        <div class="lens-card-body">
+          <div class="lens-q"><span class="lens-q-num">Q1</span>What are residents, media, and partner agencies hearing right now — and does our action match that message?</div>
+          <div class="lens-q"><span class="lens-q-num">Q2</span>Is there a state agency, federal partner, or elected official who needs to know about this decision before it's made public?</div>
+          <div class="lens-q"><span class="lens-q-num">Q3</span>What's the downstream ripple if this gets out the wrong way — through a leak, through social media, through a resident complaint?</div>
+        </div>
+        <div style="padding:0 18px 14px">
+          <div class="lens-holders-label">Lens Holders</div>
+          <div class="lens-holder-list">
+            <span class="lens-holder-chip">Wood, Jolie</span><span class="lens-holder-chip">Olson, Josh</span><span class="lens-holder-chip">Yang, Jason</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lens-card full">
+        <div class="lens-card-hdr" style="border-left:4px solid var(--purple)">
+          <div class="lc-label" style="color:#9A70CC">🟣 Executive Lens</div>
+          <div class="lc-name">Executive Decision Support</div>
+        </div>
+        <div class="lens-card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">
+          <div class="lens-q" style="grid-column:1"><span class="lens-q-num">Q1</span>Does this decision require County Manager or County Board authority — and if so, is that person in the loop right now?</div>
+          <div class="lens-q" style="grid-column:2"><span class="lens-q-num">Q2</span>What is the 48-hour version of this problem, not just the next-hour version? Are we solving for right now at the cost of tomorrow?</div>
+          <div class="lens-q" style="grid-column:1 / span 2"><span class="lens-q-num">Q3</span>When this is over, what's the story we tell? Is this a story of a county that was prepared, or one that improvised?</div>
+        </div>
+        <div style="padding:0 18px 14px">
+          <div class="lens-holders-label">Lens Holders</div>
+          <div class="lens-holder-list">
+            <span class="lens-holder-chip">Abdi, Nadir</span><span class="lens-holder-chip">Collins, Kari E</span><span class="lens-holder-chip">Francois, Karen</span><span class="lens-holder-chip">Reyes, Gloria</span><span class="lens-holder-chip">Greenlee, Andrew</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: FACILITATOR                         -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page" id="page-facilitator">
+    <div class="section-eyebrow">Facilitator Guide</div>
+    <div class="section-heading">Context Brief &amp; Facilitation Notes</div>
+    <div class="section-sub">Read aloud at the start. Then follow the timing guide.</div>
+    <div class="rule-line"></div>
+
+    <div class="brief-box">
+      <span class="brief-tag">Read Aloud — Slow Down — Make Eye Contact — Pause Between Paragraphs</span>
+      <p>It is Tuesday morning. At 7:18 AM, the IT help desk began receiving calls. Employees couldn't log in. By 8:00 AM, the CISO confirmed ransomware is running across Ramsey County's systems. Summit, Aspen, Outlook, operational systems — property tax, Environmental Health, Vital Records, LaserFiche — and county phones are offline or compromised. A ransom note is demanding $2.3 million.</p>
+      <p>It is now 9:30 AM. You are in this room together. Your county laptops are untrustworthy. Your county email is gone. Your desk phones and Jabber don't work. Your county cell phones may be compromised. You have your personal cell phone, the people at your table, some paper, and whatever you can reach through personal channels.</p>
+      <p><strong>We are not here to fix the ransomware. We are here because three things cannot wait days. They need a decision and a plan in the next few hours.</strong></p>
+      <p>Number one: Payroll runs in 48 hours. The system that runs it is compromised.<br>
+      Number two: Residents are calling. They can't reach anyone. County phones are down. They don't know if their benefits are safe or if the county is even open.<br>
+      Number three: The Sheriff's Records Management System — used for incident reports, case files, and evidence tracking — is inaccessible. Deputies are on paper.</p>
+      <p><em>Each table has the people who own these problems — and the people whose lens will make the solution better. Let's start.</em></p>
+    </div>
+
+    <div class="tip-box"><div class="tip-label">Timing</div>Use a visible countdown timer on a screen. When 5 minutes remain in a scenario: "Five minutes — lens holders, get your question in now." When time is up, say FREEZE. Do not extend. Unfinished discussions become named gaps, which is a valid outcome.</div>
+    <div class="tip-box"><div class="tip-label">Report-Out</div>Go table by table. Point to the anchor: "One decision your table made — thirty seconds." Then: "One gap your table found — thirty seconds." Do not allow elaboration. After all five tables, County Manager names three actions with owners. Done.</div>
+    <div class="tip-box"><div class="tip-label">When Discussion Stalls</div>If a table goes quiet, throw to a lens holder: "Operations lens — what breaks if this goes wrong?" This almost always restarts conversation.</div>
+    <div class="tip-box"><div class="tip-label">When Someone Debates the Scenario</div>Say: "That's a valid point and it may be true — for the purposes of this exercise, assume the condition as stated. What do you do?" Move on.</div>
+    <div class="tip-box"><div class="tip-label">Closing Line</div>End with: "Every gap we found today is a win — because we found it here, not at 7:18 AM on a Tuesday when it's real. The After-Action Report will be in your hands within 10 days. Thank you."</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: TIMER                               -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page" id="page-timer">
+    <div class="section-eyebrow">Exercise Control</div>
+    <div class="section-heading">Scenario Timer</div>
+    <div class="section-sub">Use during the exercise to track scenario time blocks. Display on a projector if possible.</div>
+    <div class="rule-line"></div>
+
+    <div class="timer-widget">
+      <div>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+        <div class="timer-label" id="timerLabel">Scenario 1 — Payroll (25 min)</div>
+      </div>
+      <div>
+        <div class="timer-controls">
+          <button class="timer-btn start-btn" id="startBtn" onclick="toggleTimer()">START</button>
+          <button class="timer-btn reset-btn" onclick="resetTimer()">RESET</button>
+        </div>
+        <div style="margin-top:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;margin-bottom:6px">Quick Set</div>
+          <div class="timer-presets">
+            <button class="preset-btn" onclick="setTimer(25,'Scenario 1 — Payroll')">25 min S1</button>
+            <button class="preset-btn" onclick="setTimer(10,'Report-Out — S1')">10 min Report</button>
+            <button class="preset-btn" onclick="setTimer(25,'Scenario 2 — Resident Comms')">25 min S2</button>
+            <button class="preset-btn" onclick="setTimer(8,'Report-Out — S2')">8 min Report</button>
+            <button class="preset-btn" onclick="setTimer(18,'Scenario 3 — RMS')">18 min S3</button>
+            <button class="preset-btn" onclick="setTimer(12,'Hot Wash')">12 min Wash</button>
+            <button class="preset-btn" onclick="setTimer(5,'Break')">5 min Break</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#0A0F1A;border:1px solid #1E2A3A;padding:20px;margin-bottom:16px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:14px">Exercise Progress</div>
+      <div id="progressTrack">
+        <div style="display:flex;gap:0;height:6px;border-radius:0;overflow:hidden;margin-bottom:10px">
+          <div style="width:12.5%;background:var(--signal);opacity:.3" title="Opening"></div>
+          <div style="width:20.8%;background:var(--signal)" title="S1"></div>
+          <div style="width:8.3%;background:#C8A040" title="Report S1"></div>
+          <div style="width:4.2%;background:#2A3A4A" title="Break"></div>
+          <div style="width:20.8%;background:#3A8ABE" title="S2"></div>
+          <div style="width:6.7%;background:#C8A040" title="Report S2"></div>
+          <div style="width:1.7%;background:#2A3A4A" title="Pivot"></div>
+          <div style="width:15%;background:var(--amber)" title="S3"></div>
+          <div style="width:10%;background:#4A9A70" title="Hot Wash"></div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--signal)">■ Scenario 1</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3A8ABE">■ Scenario 2</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber)">■ Scenario 3</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C8A040">■ Report-Out</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4A9A70">■ Hot Wash</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: RISK & LEGAL                        -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page" id="page-risk">
+    <div class="section-eyebrow">Parallel Track</div>
+    <div class="section-heading">Risk Management &amp; Legal</div>
+    <div class="section-sub">These run alongside all three scenarios. Initiate while discussions are happening — not after.</div>
+    <div class="rule-line"></div>
+
+    <div class="two-col">
+      <div>
+        <div class="track-box">
+          <div class="track-header" style="border-left:4px solid var(--amber)">
+            <div>
+              <div class="track-name">Cyber Insurance</div>
+              <div class="track-owner">Pesik, Deanna — Chief Ethics &amp; Compliance Officer</div>
+            </div>
+          </div>
+          <table class="track-table">
+            <thead><tr><th>Action</th><th>When</th></tr></thead>
+            <tbody>
+              <tr><td>Locate policy number and carrier contact — must be accessible outside county systems</td><td class="timeline-cell">NOW &lt;30 min</td></tr>
+              <tr><td>Call carrier to open the claim — most policies require notification within 24–72 hours</td><td class="timeline-cell">2–4 hrs</td></tr>
+              <tr><td>Confirm whether carrier pre-approval is required before any public breach statement</td><td class="timeline-cell">Before any statement</td></tr>
+              <tr><td>Confirm whether ransom payment requires pre-approval — unauthorized payment may void coverage</td><td class="timeline-cell">Before ransom discussion</td></tr>
+              <tr><td>Begin documenting ALL costs from incident start — overtime, contractors, lost revenue</td><td class="timeline-cell">Now — ongoing</td></tr>
+              <tr><td>Confirm if policy covers business interruption including payroll processing costs</td><td class="timeline-cell">4 hrs</td></tr>
+              <tr><td>Identify whether the RMS vendor carries their own cyber liability policy</td><td class="timeline-cell">24 hrs</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="track-box">
+          <div class="track-header" style="border-left:4px solid var(--signal)">
+            <div>
+              <div class="track-name">County Attorney</div>
+              <div class="track-owner">Lewis, Jada — Division Director, County Attorney</div>
+            </div>
+          </div>
+          <table class="track-table">
+            <thead><tr><th>Legal Action Required</th><th>When</th></tr></thead>
+            <tbody>
+              <tr><td>Determine if PII breach occurred and identify MN Statute § 13.055 AG notification requirement</td><td class="timeline-cell">24 hrs of confirmed breach</td></tr>
+              <tr><td>Identify federal notification requirements for benefit program data (HHS, SNAP, childcare, housing)</td><td class="timeline-cell">24 hrs</td></tr>
+              <tr><td>Assess attorney-client privilege implications before sharing breach details with the FBI</td><td class="timeline-cell">Before FBI briefing</td></tr>
+              <tr><td>Review RMS vendor contract for uptime obligations, breach notification, and liability provisions</td><td class="timeline-cell">4 hrs</td></tr>
+              <tr><td>Document legal exposure for late payroll and identify emergency authorization in county code</td><td class="timeline-cell">2 hrs</td></tr>
+              <tr><td>Assess chain-of-custody legal obligations for active prosecution and warrant status risk</td><td class="timeline-cell">Immediate</td></tr>
+              <tr><td>Identify MN Government Data Practices Act (MGDPA) obligations triggered by the breach</td><td class="timeline-cell">24 hrs</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PAGE: HOT WASH                            -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="page" id="page-hotwash">
+    <div class="section-eyebrow">Hot Wash — Final 12 Minutes</div>
+    <div class="section-heading">Capture Sheet</div>
+    <div class="section-sub">Facilitator runs tight — no open floor. One decision, one gap per table. 30 seconds each.</div>
+    <div class="rule-line"></div>
+
+    <div class="hotwash-grid">
+      <div class="hw-box">
+        <div class="hw-box-hdr green"><div class="hw-box-hdr-label">✓ What We Decided — All Tables</div></div>
+        <div class="hw-box-body">
+          <input class="write-line" placeholder="Table A decision..." type="text">
+          <input class="write-line" placeholder="Table B decision..." type="text">
+          <input class="write-line" placeholder="Table C decision..." type="text">
+          <input class="write-line" placeholder="Table D decision..." type="text">
+          <input class="write-line" placeholder="Table E decision..." type="text">
+          <input class="write-line" placeholder="Additional..." type="text">
+        </div>
+      </div>
+      <div class="hw-box">
+        <div class="hw-box-hdr red"><div class="hw-box-hdr-label">⚠ Gaps Found — All Tables</div></div>
+        <div class="hw-box-body">
+          <input class="write-line" placeholder="Table A gap..." type="text">
+          <input class="write-line" placeholder="Table B gap..." type="text">
+          <input class="write-line" placeholder="Table C gap..." type="text">
+          <input class="write-line" placeholder="Table D gap..." type="text">
+          <input class="write-line" placeholder="Table E gap..." type="text">
+          <input class="write-line" placeholder="Additional..." type="text">
+        </div>
+      </div>
+    </div>
+
+    <div class="action-table-wrapper">
+      <div class="atw-hdr">■ County Manager — Top 3 Actions With Owners and Deadlines</div>
+      <div class="action-row header">
+        <div class="action-cell header-cell">Action</div>
+        <div class="action-cell header-cell">Owner</div>
+        <div class="action-cell header-cell">Personal Contact</div>
+        <div class="action-cell header-cell">Done By</div>
+      </div>
+      <div class="action-row">
+        <div class="action-cell"><input class="action-input" placeholder="Action 1..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Name..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Cell number..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Date / time..." type="text"></div>
+      </div>
+      <div class="action-row">
+        <div class="action-cell"><input class="action-input" placeholder="Action 2..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Name..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Cell number..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Date / time..." type="text"></div>
+      </div>
+      <div class="action-row">
+        <div class="action-cell"><input class="action-input" placeholder="Action 3..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Name..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Cell number..." type="text"></div>
+        <div class="action-cell"><input class="action-input" placeholder="Date / time..." type="text"></div>
+      </div>
+    </div>
+
+    <div style="background:#080C14;border:1px solid #1E2A3A;padding:16px 20px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:10px">After-Action Timeline</div>
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:8px 16px;font-size:13px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--signal)">Within 48 hrs</span><span style="color:#9A9088">Soukup consolidates all five capture sheets. Facilitator circulates master gap list to all 46 participants.</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--signal)">Within 10 days</span><span style="color:#9A9088">Full After-Action Report delivered to County Manager with all decisions, gaps, and action items with owners and deadlines.</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--signal)">Within 30 days</span><span style="color:#9A9088">Each action item owner reports status. County Manager reviews at next leadership meeting.</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--signal)">Within 60 days</span><span style="color:#9A9088">CISO and Risk Management deliver printed "break glass" binder to every department — emergency contacts and manual procedures that require no county system to access.</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- ══ JAVASCRIPT ════════════════════════════════════════ -->
+<script>
+// ── NAVIGATION ─────────────────────────────────────────
+const pageNames = {
+  'situation':'Situation Brief','agenda':'Agenda & Structure',
+  'scenarios':'Scenarios','tables':'Table Assignments',
+  'lenses':'Lens Cards','facilitator':'Facilitator Guide',
+  'timer':'Exercise Timer','risk':'Risk & Legal Track',
+  'hotwash':'Hot Wash Capture'
+};
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const page = document.getElementById('page-'+id);
+  if(page) page.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+id+"'")) n.classList.add('active');
+  });
+  document.getElementById('breadcrumbCurrent').textContent = pageNames[id]||id;
+  window.scrollTo(0,0);
+}
+
+// ── TABLE SWITCHER ─────────────────────────────────────
+function showTable(letter, btn) {
+  document.querySelectorAll('.table-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.table-btn').forEach(b=>b.classList.remove('active-tbl'));
+  const panel = document.getElementById('tpanel-'+letter);
+  if(panel) panel.classList.add('active');
+  if(btn) btn.classList.add('active-tbl');
+}
+
+// ── SCENARIO SWITCHER ──────────────────────────────────
+function showScenario(id, btn) {
+  document.querySelectorAll('.scen-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.scen-tab').forEach(t=>t.classList.remove('active'));
+  const panel = document.getElementById('scen-'+id);
+  if(panel) panel.classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+// ── LIVE CLOCK ─────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('liveClock').textContent = h+':'+m+':'+s;
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('liveDate').textContent =
+    days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+}
+updateClock();
+setInterval(updateClock,1000);
+
+// ── TIMER ──────────────────────────────────────────────
+let timerSeconds = 25*60;
+let timerRunning = false;
+let timerInterval = null;
+
+function setTimer(minutes, label) {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSeconds = minutes*60;
+  document.getElementById('startBtn').textContent = 'START';
+  document.getElementById('timerLabel').textContent = label+' ('+minutes+' min)';
+  const d = document.getElementById('timerDisplay');
+  d.classList.remove('running','expired');
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(Math.abs(timerSeconds)/60);
+  const s = Math.abs(timerSeconds)%60;
+  const sign = timerSeconds < 0 ? '-' : '';
+  document.getElementById('timerDisplay').textContent = sign+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function toggleTimer() {
+  if(timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('startBtn').textContent = 'RESUME';
+    document.getElementById('timerDisplay').classList.remove('running');
+  } else {
+    timerRunning = true;
+    document.getElementById('startBtn').textContent = 'PAUSE';
+    document.getElementById('timerDisplay').classList.add('running');
+    timerInterval = setInterval(()=>{
+      timerSeconds--;
+      updateTimerDisplay();
+      if(timerSeconds === 0) {
+        document.getElementById('timerDisplay').classList.remove('running');
+        document.getElementById('timerDisplay').classList.add('expired');
+      }
+    },1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('startBtn').textContent = 'START';
+  const label = document.getElementById('timerLabel').textContent;
+  const match = label.match(/(\d+) min/);
+  timerSeconds = match ? parseInt(match[1])*60 : 25*60;
+  document.getElementById('timerDisplay').classList.remove('running','expired');
+  updateTimerDisplay();
+}
+</script>
+</body>
+</html>
